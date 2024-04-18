@@ -1,0 +1,70 @@
+THINGS THAT DO NOT MAKE ANY DIFFERENCE:
+- null as new value
+- everything is done on one set and at the end split it 
+
+THINGS THAT INCREASE THE ACCURACY:
+- discretization -> age and fare as discrete values ( k bins ) -> better performance :)
+- changing order ( 2 attempt )
+
+
+TO CHECK:
+1. cross validation ? piątek
+2. ONE HOT ENCODING ? piątek
+
+
+---
+STARTING ACCURACY: 0.6974789915966386
+
+----------------- changing age and Fare -------------------
+1.1 attempt (accuracy 0.7871148459383753):
+ - split to train and data set
+ - null values as mean, mode
+ - change categorical to descrite
+ - normalization
+
+1.2 attempt (accuracy 0.7843137254901961):
+ - split to train and data set
+ - null values as mean, mode
+ - change categorical to descrite
+ + assign Fare and Age to 3 classes
+ - normalization
+
+1.3 attempt (accuracy 0.7899159663865546):  !!!!!!!!! AT THIS STAGE THE BEST ACCURACY !!!!!!!!
+ - split to train and data set
+ - null values as mean, mode
+ - change categorical to descrite
+ + assign Fare and Age to 5 classes ( the same accuracy for 8 classes)
+ - normalization
+
+
+2.1 attempt (accuracy 0.8011204481792717)
+ - 1.3
+ - removing all columns except ['Sex', 'Fare', 'Pclass', 'Survived', 'Embarked']
+
+------------- null values as new values -------------------------
+1.1 (accuracy 0.7843137254901961)
+ - split to train and data set
+ - null values as new
+ - change categorical to descrite
+ - assign Fare and Age to 5 classes ( the same accuracy for 8 classes)
+ - normalization
+
+1.2 (accuracy 0.7787114845938375)
+ - split to train and data set
+ - null values as new
+ - change categorical to descrite
+ - normalization
+
+--------------- training on only one set and at the end split ---------
+1. (accuracy 0.7843137254901961)
+ - null values as new
+ - change categorical to descrite
+ ! assign Fare and Age to 5 classes changes nothing
+
+
+
+--------------- cross validation ------------------------
+    
+
+
+
