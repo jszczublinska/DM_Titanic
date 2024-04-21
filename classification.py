@@ -4,6 +4,8 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler, StandardScaler, KBinsDiscretizer
 from sklearn.feature_selection import f_classif
 import numpy as np
+from sklearn.decomposition import PCA
+from sklearn.model_selection import KFold
 
 
 def changeNameToSurname(data, column):
@@ -42,6 +44,38 @@ def dropColumns(data, columns_to_stay):
     for column in data.columns.tolist():
         if column not in columns_to_stay:
             data.drop(column, axis=1, inplace=True)
+
+def computePCA(X, X_test):
+    """
+    Computes Principal Component Analysis (PCA) on the input data.
+    --------
+    Input:
+    - X: pandas.DataFrame
+        Feature dataset for training.
+    - X_test: pandas.DataFrame
+        Feature dataset for testing.
+    --------
+    Output:
+    - X_pca: numpy array
+        Transformed feature dataset for training after PCA.
+    - X_pca_test: numpy array
+        Transformed feature dataset for testing after PCA.
+    - pca_df: pandas.DataFrame
+        DataFrame containing the transformed features for training.
+    - pca_df_test: pandas.DataFrame
+        DataFrame containing the transformed features for testing.
+    """
+
+    pca_transformer = PCA(n_components=4)
+
+    X_pca = pca_transformer.fit_transform(X)
+    X_pca_test = pca_transformer.transform(X_test)
+    pca_df = pd.DataFrame(X_pca)
+    pca_df_test = pd.DataFrame(X_pca_test)  
+    pca_components = pca_transformer.components_
+    print("PCA components: ", pca_components)
+
+    return X_pca, X_pca_test, pca_df, pca_df_test
 
 
 def computeAnova(normalized_data, target_values):
@@ -267,8 +301,32 @@ def getTwoDatasets(data):
 
     return train_df, test_df
 
-def testing(): ### at the end, testowanie różńych setów, cross validation !
-    ...
+def testing(X,y, n_splits=5): ### at the end, testowanie różńych setów, cross validation !
+    """
+    Performs k-fold cross-validation.
+    --------
+    Input:
+    - X_data : pandas.DataFrame
+        Input features of data.
+    - y_data : pandas.DataFrame
+        Target labels of data.
+    - n_splits: int
+        Number of splits (k), default is 5.
+    --------   
+    Output:
+    - List containing the evaluation metric (e.g., accuracy) scores for each cross-validation iteration.
+    """
+    kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
+    scores = []
+
+    for train_index, test_index in kf.split(X):
+        X_train, X_test = X[train_index], X[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+
+        score = getAccuracy(X_train, y_train, X_test, y_test )
+        scores.append(score)
+
+    return scores
 
 def getAccuracy( train_X, train_Y, test_X, test_Y):
     """

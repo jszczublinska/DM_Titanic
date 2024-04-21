@@ -1,15 +1,11 @@
 THINGS THAT DO NOT MAKE ANY DIFFERENCE:
 - null as new value
 - everything is done on one set and at the end split it 
+- making cross validation (?)
 
 THINGS THAT INCREASE THE ACCURACY:
 - discretization -> age and fare as discrete values ( k bins ) -> better performance :)
 - changing order ( 2 attempt )
-
-
-TO CHECK:
-1. cross validation ? piątek
-2. ONE HOT ENCODING ? piątek
 
 
 ---
@@ -68,3 +64,6 @@ STARTING ACCURACY: 0.6974789915966386
 
 
 
+----------- in 2 attempt in the feature selection(last step)------------------
+- if from all components we choose only '0' ( we get 0.8207282913165266)
+- if from all we choose '0' and '1' ( we get 0.7675070028011205)
