@@ -301,32 +301,6 @@ def getTwoDatasets(data):
 
     return train_df, test_df
 
-def testing(X,y, n_splits=5): ### at the end, testowanie różńych setów, cross validation !
-    """
-    Performs k-fold cross-validation.
-    --------
-    Input:
-    - X_data : pandas.DataFrame
-        Input features of data.
-    - y_data : pandas.DataFrame
-        Target labels of data.
-    - n_splits: int
-        Number of splits (k), default is 5.
-    --------   
-    Output:
-    - List containing the evaluation metric (e.g., accuracy) scores for each cross-validation iteration.
-    """
-    kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
-    scores = []
-
-    for train_index, test_index in kf.split(X):
-        X_train, X_test = X[train_index], X[test_index]
-        y_train, y_test = y[train_index], y[test_index]
-
-        score = getAccuracy(X_train, y_train, X_test, y_test )
-        scores.append(score)
-
-    return scores
 
 def getAccuracy( train_X, train_Y, test_X, test_Y):
     """
