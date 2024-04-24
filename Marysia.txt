@@ -1,5 +1,4 @@
 1. Label Encoder
-
 - In our set it is perfect solution for 'Pclass' which has a meaningful order and 'Sex' feature, but we also decided to use it 
 for other caterogical values ( możesz dodać, że myslałyśmy nad OneHot Encoding because it would be better here ale nie chicałyśmy robić kolejnych kolumn)
 
