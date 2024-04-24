@@ -263,7 +263,6 @@ def changeNullValuesToNewValue(data):
         null_percentage = data[column].isnull().mean()
 
         if null_percentage > 0.05:
-            print(column, 'was with NaN values')
 
             if data[column].dtype == 'object': ##for caterogical type
                 value = 'Null' ### takes first one
