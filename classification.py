@@ -133,18 +133,20 @@ def printVariableType(data):
     for head in headers:
         procentage.append( round((data[head].nunique()/ len(data[head])),3))
         dtype = data[head].dtype
-        if dtype == 'object' or dtype == 'category':
-            variable_types.append(str(dtype) + ' (categorical)')
+        if dtype == 'object':
+            variable_types.append(str(dtype) + ' (Text or mixed numeric and non-numeric values)')
         elif dtype == 'int64':
-            variable_types.append(str(dtype) + ' (discrete)')
+            variable_types.append(str(dtype) + ' (Integer numbers)')
         elif dtype == 'float64':
-            variable_types.append(str(dtype) + ' (continuous)')
+            variable_types.append(str(dtype) + ' (Floating point numbers)')
         elif dtype == 'bool':  
-            variable_types.append(str(dtype) + ' (bool)')
-        elif dtype == 'datatime64':
-            variable_types.append(str(dtype) + ' (date and time values)')
-        elif dtype == 'timedelta':  
-            variable_types.append(str(dtype) + ' (difference between two datatimes)')
+            variable_types.append(str(dtype) + ' (True/False values)')
+        elif dtype == 'datetime64[ns]':
+            variable_types.append(str(dtype) + ' (Date and time values)')
+        elif dtype == 'timedelta64[ns]':  
+            variable_types.append(str(dtype) + ' (Differences between two datetimes)')
+        elif dtype == 'category':
+            variable_types.append(str(dtype) + ' (Finite list of text values)')
 
     variable_df = pd.DataFrame({'Column': headers, 'Variable_Type ': variable_types, 'the percentage values of unique values': procentage})
     return variable_df
