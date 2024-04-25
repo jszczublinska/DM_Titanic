@@ -118,12 +118,18 @@ def printVariableType(data):
     for head in headers:
         procentage.append( round((data[head].nunique()/ len(data[head])),3))
         dtype = data[head].dtype
-        if dtype == 'object':
+        if dtype == 'object' or dtype == 'category':
             variable_types.append(str(dtype) + ' (caterogical)')
         elif dtype == 'int64':
             variable_types.append(str(dtype) + ' (discrete)')
-        else:
+        elif dtype == 'float64':
             variable_types.append(str(dtype) + ' (continuous)')
+        elif dtype == 'bool':  
+            variable_types.append(str(dtype) + ' (bool)')
+        elif dtype == 'datatime64':
+            variable_types.append(str(dtype) + ' (date and time values)')
+        elif dtype == 'timedelta':  
+            variable_types.append(str(dtype) + ' (difference between two datatimes)')
 
     variable_df = pd.DataFrame({'Column': headers, 'Variable_Type ': variable_types, 'the percentage values of unique values': procentage})
     return variable_df
@@ -198,7 +204,7 @@ def changeCaterogicalToDescrite(data):
     columns_to_change = []
 
     for column in columns_names:
-        if data[column].dtype == 'object':
+        if data[column].dtype == 'object' or data[column].dtype == 'category':
             columns_to_change.append(column)
 
     label_encoder = LabelEncoder()
@@ -229,9 +235,9 @@ def changeNullValuesToMean(data):
 
         if null_percentage > 0.05:
 
-            if data[column].dtype == 'object': ##for caterogical type
+            if data[column].dtype == 'object' or data[column].dtype == 'category' or data[column].dtype == 'bool': ##for caterogical type
                 value = data[column].mode()[0] ### takes first one
-            else:
+            elif data[column].dtype == 'int64' or data[column].dtype == 'float64':
                 value = round(data[column].mean(),2) 
 
         if value != None:
@@ -264,9 +270,9 @@ def changeNullValuesToNewValue(data):
 
         if null_percentage > 0.05:
 
-            if data[column].dtype == 'object': ##for caterogical type
+            if data[column].dtype == 'object' or data[column].dtype == 'category' or data[column].dtype == 'bool': ##for caterogical type
                 value = 'Null' ### takes first one
-            else:
+            elif data[column].dtype == 'int64' or data[column].dtype == 'float64':
                 value = round(data[column].max()+1,2) 
 
         if value != None:
