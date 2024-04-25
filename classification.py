@@ -168,9 +168,10 @@ def normalizeData(data , target_column):
     """
     assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
     assert target_column in data.columns, f"Column {target_column} not found in the DataFrame"
+    
     for column in data.columns:
         assert data[column].dtype == 'int64' or data[column].dtype == 'float64', f"Column {column} must be numerical"
-        
+
     target_column_index = data.columns.get_loc(target_column)
 
     X = pd.concat([data.iloc[:, :target_column_index], data.iloc[:, target_column_index+1:]], axis=1)
@@ -227,7 +228,7 @@ def changeCaterogicalToDescrite(data):
     columns_to_change = []
 
     for column in columns_names:
-        if data[column].dtype == 'object' or data[column].dtype == 'category':
+        if data[column].dtype == 'category':
             columns_to_change.append(column)
 
     label_encoder = LabelEncoder()
@@ -344,9 +345,9 @@ def getAccuracy( train_X, train_Y, test_X, test_Y):
         Input features of training data.
     train_Y : pandas.DataFrame
         Target labels of training data.
-    test_X : pandas.DataFrame
+    test_X : pandas.Series
         Input features of test data.
-    test_Y : pandas.DataFrame
+    test_Y : pandas.Series
         Target labels of test data.
     --------
     Output:
@@ -356,8 +357,8 @@ def getAccuracy( train_X, train_Y, test_X, test_Y):
 
     assert isinstance(train_X, pd.DataFrame), "train_X must be a pandas DataFrame"
     assert isinstance(train_Y, pd.DataFrame), "train_Y must be a pandas DataFrame"
-    assert isinstance(test_X, pd.DataFrame), "test_X must be a pandas DataFrame"
-    assert isinstance(test_Y, pd.DataFrame), "test_Y must be a pandas DataFrame"
+    assert isinstance(test_X, pd.Series), "test_X must be a pandas Series"
+    assert isinstance(test_Y, pd.Series), "test_Y must be a pandas Series"
 
     classifier = SVC()
 
