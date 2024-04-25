@@ -23,7 +23,7 @@ def changeNameToSurname(data, column):
     """
 
     assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
-    assert column in data.columns, f"Column {column} column not found in the DataFramee"
+    assert column in data.columns, f"Column {column} not found in the DataFrame"
 
     for index, row in data.iterrows():
         assert 'Name' in row, "Name column not found in DataFrame"
@@ -98,7 +98,7 @@ def computeAnova(normalized_data, target_values):
     Input:
     normalized_data : pandas.DataFrame
         Input DataFrame containing normalized features.
-    target_values : one column of pandas.DataFrame, pd.Series
+    target_values : one column of pandas.DataFrame
         Target values for classification
     --------
     Output:
@@ -106,7 +106,6 @@ def computeAnova(normalized_data, target_values):
         DataFrame with ANOVA scores for each feature.
     """
     assert isinstance(normalized_data, pd.DataFrame), "normalized_data must be a pandas DataFrame"
-    assert isinstance(target_values, pd.Series), "target_values must be a pandas Series"
 
     cols = normalized_data.columns.tolist()
     scores_anova, p_vals_anova = f_classif(normalized_data, target_values)
@@ -168,7 +167,7 @@ def normalizeData(data , target_column):
         Normalized DataFrame.
     """
     assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
-    assert target_column in data.columns, f"Column {target_column} not found in DataFrame"
+    assert target_column in data.columns, f"Column {target_column} not found in the DataFrame"
 
     target_column_index = data.columns.get_loc(target_column)
 
