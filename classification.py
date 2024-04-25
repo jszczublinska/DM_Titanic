@@ -343,9 +343,9 @@ def getAccuracy( train_X, train_Y, test_X, test_Y):
     Input:
     train_X : pandas.DataFrame
         Input features of training data.
-    train_Y : pandas.DataFrame
+    train_Y : pandas.Series
         Target labels of training data.
-    test_X : pandas.Series
+    test_X : pandas.DataFrame
         Input features of test data.
     test_Y : pandas.Series
         Target labels of test data.
@@ -356,8 +356,8 @@ def getAccuracy( train_X, train_Y, test_X, test_Y):
     """
 
     assert isinstance(train_X, pd.DataFrame), "train_X must be a pandas DataFrame"
-    assert isinstance(train_Y, pd.DataFrame), "train_Y must be a pandas DataFrame"
-    assert isinstance(test_X, pd.Series), "test_X must be a pandas Series"
+    assert isinstance(train_Y, pd.Series), "train_Y must be a pandas Series"
+    assert isinstance(test_X, pd.DataFrame), "test_X must be a pandas DataFrame"
     assert isinstance(test_Y, pd.Series), "test_Y must be a pandas Series"
 
     classifier = SVC()
