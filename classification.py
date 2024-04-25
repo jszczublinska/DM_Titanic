@@ -26,6 +26,7 @@ def changeNameToSurname(data, column):
     assert column in data.columns, f"Column {column} column not found in the DataFramee"
 
     for index, row in data.iterrows():
+        assert 'Name' in row, "Name column not found in DataFrame"
         assert isinstance(row.Name, str), "Name column must be a string"
         surname = row.Name.split(',')[0]
         data.at[index, column] = surname
