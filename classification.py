@@ -133,10 +133,8 @@ def printVariableType(data):
     for head in headers:
         procentage.append( round((data[head].nunique()/ len(data[head])),3))
         dtype = data[head].dtype
-        if dtype == 'category':
+        if dtype == 'object' or dtype == 'category':
             variable_types.append(str(dtype) + ' (categorical)')
-        elif dtype == 'object':
-            variable_types.append(str(dtype) + ' (object)')
         elif dtype == 'int64':
             variable_types.append(str(dtype) + ' (discrete)')
         elif dtype == 'float64':
