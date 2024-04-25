@@ -22,7 +22,11 @@ def changeNameToSurname(data, column):
     None
     """
 
+    assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
+    assert column in data.columns, f"Column {column} column not found in the DataFramee"
+
     for index, row in data.iterrows():
+        assert isinstance(row.Name, str), "Name column must be a string"
         surname = row.Name.split(',')[0]
         data.at[index, column] = surname
 
@@ -40,6 +44,11 @@ def dropColumns(data, columns_to_stay):
     Output:
     None
     """
+    assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
+    assert isinstance(columns_to_stay, list), "columns_to_stay must be a list"
+
+    for column in columns_to_stay:
+        assert column in data.columns, f"Column {column} not found in DataFrame"
 
     for column in data.columns.tolist():
         if column not in columns_to_stay:
@@ -65,6 +74,9 @@ def computePCA(X, X_test):
     - pca_df_test: pandas.DataFrame
         DataFrame containing the transformed features for testing.
     """
+    assert isinstance(X, pd.DataFrame), "X must be a pandas DataFrame"
+    assert isinstance(X_test, pd.DataFrame), "X_test must be a pandas DataFrame"
+    assert X.columns.to_list() == X_test.columns.to_list(), "X and X_test must have the same columns"
 
     pca_transformer = PCA(n_components=4)
 
@@ -85,13 +97,15 @@ def computeAnova(normalized_data, target_values):
     Input:
     normalized_data : pandas.DataFrame
         Input DataFrame containing normalized features.
-    target_values : one column of pandas.DataFrame
+    target_values : one column of pandas.DataFrame, pd.Series
         Target values for classification
     --------
     Output:
     pandas.DataFrame
         DataFrame with ANOVA scores for each feature.
     """
+    assert isinstance(normalized_data, pd.DataFrame), "normalized_data must be a pandas DataFrame"
+    assert isinstance(target_values, pd.Series), "target_values must be a pandas Series"
 
     cols = normalized_data.columns.tolist()
     scores_anova, p_vals_anova = f_classif(normalized_data, target_values)
@@ -111,6 +125,7 @@ def printVariableType(data):
     variable_df : pandas.DataFrame
         DataFrame with columns indicating variable types and uniquess of each column.
     """
+    assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
 
     headers = data.columns.to_list()
     procentage = []
@@ -143,6 +158,8 @@ def normalizeData(data , target_column):
     pandas.DataFrame
         Normalized DataFrame.
     """
+    assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
+    assert target_column in data.columns, f"Column {target_column} not found in DataFrame"
 
     target_column_index = data.columns.get_loc(target_column)
 
@@ -167,7 +184,8 @@ def changeContinuousToDescrite(data):
     pandas.DataFrame
         DataFrame with discretized continuous columns.
     """
-    
+    assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
+
     columns_names = data.columns.to_list()
     columns_to_change = []
 
@@ -193,6 +211,7 @@ def changeCaterogicalToDescrite(data):
     Output:
     None
     """
+    assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
 
     columns_names = data.columns.to_list()
     columns_to_change = []
@@ -217,6 +236,7 @@ def changeNullValuesToMean(data):
     Output:
     None
     """
+    assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
 
     columns_names = data.columns.to_list()
 
@@ -253,6 +273,9 @@ def changeNullValuesToNewValue(data):
     Output:
     None
     """
+
+    assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
+    
     columns_names = data.columns.to_list()
 
     # iterate over all columns
@@ -291,6 +314,7 @@ def getTwoDatasets(data):
     pandas.DataFrame, pandas.DataFrame
         Train and Test DataFrames.
     """
+    assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
 
     total_rows = len(data)
     split_index = int(0.6 * total_rows)
@@ -319,6 +343,11 @@ def getAccuracy( train_X, train_Y, test_X, test_Y):
     float
         Accuracy score of the model.
     """
+
+    assert isinstance(train_X, pd.DataFrame), "train_X must be a pandas DataFrame"
+    assert isinstance(train_Y, pd.DataFrame), "train_Y must be a pandas DataFrame"
+    assert isinstance(test_X, pd.DataFrame), "test_X must be a pandas DataFrame"
+    assert isinstance(test_Y, pd.DataFrame), "test_Y must be a pandas DataFrame"
 
     classifier = SVC()
 
