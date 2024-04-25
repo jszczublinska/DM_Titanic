@@ -168,7 +168,9 @@ def normalizeData(data , target_column):
     """
     assert isinstance(data, pd.DataFrame), "Input data must be a pandas DataFrame"
     assert target_column in data.columns, f"Column {target_column} not found in the DataFrame"
-
+    for column in data.columns:
+        assert data[column].dtype == 'int64' or data[column].dtype == 'float64', f"Column {column} must be numerical"
+        
     target_column_index = data.columns.get_loc(target_column)
 
     X = pd.concat([data.iloc[:, :target_column_index], data.iloc[:, target_column_index+1:]], axis=1)
