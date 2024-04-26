@@ -1,11 +1,10 @@
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, accuracy_score
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder, MinMaxScaler, StandardScaler, KBinsDiscretizer
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler, KBinsDiscretizer
 from sklearn.feature_selection import f_classif
 import numpy as np
 from sklearn.decomposition import PCA
-from sklearn.model_selection import KFold
 
 
 def changeNameToSurname(data, column):
@@ -228,7 +227,7 @@ def changeCaterogicalToDescrite(data):
     columns_to_change = []
 
     for column in columns_names:
-        if data[column].dtype == 'category':
+        if data[column].dtype == 'category' or data[column].dtype == 'object' or data[column].dtype == 'bool':
             columns_to_change.append(column)
 
     label_encoder = LabelEncoder()
