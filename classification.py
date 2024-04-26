@@ -146,9 +146,7 @@ def printVariableType(data):
             variable_types.append(str(dtype) + ' (Differences between two datetimes)')
         elif dtype == 'category':
             variable_types.append(str(dtype) + ' (Finite list of text values)')
-    print(headers, len(headers))
-    print(procentage)
-    print(variable_types)
+            
     variable_df = pd.DataFrame({'Column': headers, 'Variable_Type ': variable_types, 'the percentage values of unique values': procentage})
     return variable_df
 
