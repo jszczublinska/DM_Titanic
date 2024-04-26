@@ -131,12 +131,12 @@ def printVariableType(data):
     variable_types = []
     for head in headers:
         procentage.append( round((data[head].nunique()/ len(data[head])),3))
-        dtype = data[head].dtype
+        dtype = str(data[head].dtype)
         if dtype == 'object':
             variable_types.append(str(dtype) + ' (Text or mixed numeric and non-numeric values)')
-        elif dtype == 'int64':
+        elif dtype[:3] == 'int':
             variable_types.append(str(dtype) + ' (Integer numbers)')
-        elif dtype == 'float64':
+        elif dtype[:5] == 'float':
             variable_types.append(str(dtype) + ' (Floating point numbers)')
         elif dtype == 'bool':  
             variable_types.append(str(dtype) + ' (True/False values)')
@@ -146,7 +146,9 @@ def printVariableType(data):
             variable_types.append(str(dtype) + ' (Differences between two datetimes)')
         elif dtype == 'category':
             variable_types.append(str(dtype) + ' (Finite list of text values)')
-
+    print(headers, len(headers))
+    print(procentage)
+    print(variable_types)
     variable_df = pd.DataFrame({'Column': headers, 'Variable_Type ': variable_types, 'the percentage values of unique values': procentage})
     return variable_df
 
@@ -169,7 +171,7 @@ def normalizeData(data , target_column):
     assert target_column in data.columns, f"Column {target_column} not found in the DataFrame"
     
     for column in data.columns:
-        assert data[column].dtype == 'int64' or data[column].dtype == 'float64', f"Column {column} must be numerical"
+        assert str(data[column].dtype)[:3] == 'int' or str(data[column].dtype)[:5] == 'float', f"Column {column} must be numerical"
 
     target_column_index = data.columns.get_loc(target_column)
 
