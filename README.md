@@ -21,6 +21,7 @@ Our main goal is to achieve better accuracy in classification.
 The report is available in ***Titanic_report.pdf*** and the presentation in ***Presentation.pdf***.
 
 Inside code folder, you can find the following files:
+
 -***classification.py*** - the main file with the used functions
 -***final_titanic.ipynb*** - the final version of our model presented in Jupyter Notebook
 -***titanic.ipynb*** - a more detailed analysis of the classification process
